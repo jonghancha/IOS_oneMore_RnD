@@ -28,7 +28,7 @@ alert.addPickerView(values: pickerViewValues, initialSelection: pickerViewSelect
 alert.addAction(title: "Done", style: .cancel)
 alert.show()
 ```
-
+- 위 코드는 actionSheet이고, alert형식으로 바꾸려면 제 코드를 사용해주세요
 ## Installing
 
 #### CocoaPods
