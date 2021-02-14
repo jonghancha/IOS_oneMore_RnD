@@ -1,0 +1,6 @@
+framework module SimpleAlertPickers {
+  umbrella header "SimpleAlertPickers-umbrella.h"
+
+  export *
+  module * { export * }
+}

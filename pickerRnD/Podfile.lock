@@ -1,0 +1,16 @@
+PODS:
+  - SimpleAlertPickers (1.2.0)
+
+DEPENDENCIES:
+  - SimpleAlertPickers
+
+SPEC REPOS:
+  trunk:
+    - SimpleAlertPickers
+
+SPEC CHECKSUMS:
+  SimpleAlertPickers: b14de0fe3f9c306bd59a5afdbd6f6278486267f4
+
+PODFILE CHECKSUM: 6bef6778963ea86b1f27d6b259eb7fc7c0d908a7
+
+COCOAPODS: 1.10.1
