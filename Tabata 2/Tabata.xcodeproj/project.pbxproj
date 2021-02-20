@@ -17,6 +17,7 @@
 		32BE15F925DF95FB00E945CE /* TabataTimerSetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BE15F825DF95FB00E945CE /* TabataTimerSetViewController.swift */; };
 		32BE15FC25DF960F00E945CE /* TabataTimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BE15FB25DF960F00E945CE /* TabataTimerViewController.swift */; };
 		32BE15FF25DF962900E945CE /* TabataAddNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BE15FE25DF962900E945CE /* TabataAddNoteViewController.swift */; };
+		3D282EB825E1200600E9E4C7 /* smile.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D282EB725E1200600E9E4C7 /* smile.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		32BE15F825DF95FB00E945CE /* TabataTimerSetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabataTimerSetViewController.swift; sourceTree = "<group>"; };
 		32BE15FB25DF960F00E945CE /* TabataTimerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabataTimerViewController.swift; sourceTree = "<group>"; };
 		32BE15FE25DF962900E945CE /* TabataAddNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabataAddNoteViewController.swift; sourceTree = "<group>"; };
+		3D282EB725E1200600E9E4C7 /* smile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smile.png; sourceTree = "<group>"; };
 		C581719ACCE0BE65726BA67F /* Pods-Tabata.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tabata.debug.xcconfig"; path = "Target Support Files/Pods-Tabata/Pods-Tabata.debug.xcconfig"; sourceTree = "<group>"; };
 		F1514C0632B53602D2DBAE0E /* Pods_Tabata.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tabata.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -77,6 +79,7 @@
 		32BE15DB25DF8E6800E945CE /* Tabata */ = {
 			isa = PBXGroup;
 			children = (
+				3D282EB725E1200600E9E4C7 /* smile.png */,
 				32BE15DC25DF8E6800E945CE /* AppDelegate.swift */,
 				32BE15DE25DF8E6800E945CE /* SceneDelegate.swift */,
 				32BE15E025DF8E6800E945CE /* ViewController.swift */,
@@ -161,6 +164,7 @@
 			files = (
 				32BE15E925DF8E6B00E945CE /* LaunchScreen.storyboard in Resources */,
 				32BE15E625DF8E6B00E945CE /* Assets.xcassets in Resources */,
+				3D282EB825E1200600E9E4C7 /* smile.png in Resources */,
 				32BE15E425DF8E6800E945CE /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
