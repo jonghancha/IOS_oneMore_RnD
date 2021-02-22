@@ -35,9 +35,31 @@ class TabataTimerSetViewController: UIViewController {
     /////////////////////////////////////////////////////
     
     // 피커에 들어갈 배열 구성.
-    let times: [String] = (1...10).map { String($0) }
+    var rounds = [String]() // = (1...10).map { String($0) }
+    var times = [String]()  //= (5...100).map { String($0) }
+    var rest = [String]() //= (1...10).map { String($0) }
+    var setRounds = [String]()  //= (5...100).map { String($0) }
+    var setRest = [String]() //= (1...10).map { String($0) }
+    
     // 피커에서 선택된 값 변수
-    var pickedValue: String?
+    var pickedRound: String?
+    var pickedTime: String?
+    var pickedRest: String?
+    var pickedSetRound: String?
+    var pickedSetRest: String?
+    
+    
+    
+    // 세트 횟수 보이기
+    var isHidden: Bool = true
+    
+    var buttonRounds = [String]()
+   
+    var buttonTimes = [String]()
+    var buttonRest = [String]()
+    var buttonSetRounds = [String]()
+    var buttonSetRest = [String]()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,120 +68,319 @@ class TabataTimerSetViewController: UIViewController {
         tabataUIView.layer.cornerRadius = 20
         
         tabataStartButton.layer.masksToBounds = true
-        tabataStartButton.layer.cornerRadius = 10
+        tabataStartButton.layer.cornerRadius = 20
         
         tabataRoundButton.layer.masksToBounds = true
-        tabataRoundButton.layer.cornerRadius = 10
+        tabataRoundButton.layer.cornerRadius = 20
         tabataWorkButton.layer.masksToBounds = true
-        tabataWorkButton.layer.cornerRadius = 10
+        tabataWorkButton.layer.cornerRadius = 20
         tabataRestButton.layer.masksToBounds = true
-        tabataRestButton.layer.cornerRadius = 10
+        tabataRestButton.layer.cornerRadius = 20
         
         tabataRepSetButton.layer.masksToBounds = true
-        tabataRepSetButton.layer.cornerRadius = 10
+        tabataRepSetButton.layer.cornerRadius = 20
         tabataRepRestButton.layer.masksToBounds = true
-        tabataRepRestButton.layer.cornerRadius = 10
+        tabataRepRestButton.layer.cornerRadius = 20
         
         var second = 0
         var minute = 0
         
-        for i in 1...20{
-              if i*15 % 60 == 0{
-                minute += 1
-                second = 0
-              }else{
-                second += 15
-              }
-              if second == 0{
-                print("0\(minute):0\(second)")
-              }else{
-                print("0\(minute):\(second)")
-              }
-            }
+        
+        // 5 ~ 100 분 1분 단위
+                for i in 5...100{
+                    if i < 10{
+                        times.append("0\(i):00 분")
+                    }else{
+                        times.append("\(i):00 분")
+
+                    }
+                    buttonTimes.append("\(i)")
+                }
+        // 5 ~ 100 분 1분 단위
+                for i in 5...100{
+                    if i < 10{
+                        rest.append("0\(i):00 분")
+                    }else{
+                        rest.append("\(i):00 분")
+
+                    }
+                    buttonRest.append("\(i)")
+                }
+        // 5 ~ 100 분 1분 단위
+                for i in 5...100{
+                    if i < 10{
+                        setRest.append("0\(i):00 분")
+                    }else{
+                        setRest.append("\(i):00 분")
+
+                    }
+                    buttonSetRest.append("\(i)")
+                }
         
         
-            for i in 1...20{
-              if i*15 % 60 == 0{
-                minute += 1
-                second = 0
-              }else{
-                second += 15
-              }
-              if second == 0{
-                print("0\(minute):0\(second)")
-              }else{
-                print("0\(minute):\(second)")
-              }
-            }
+        // 1 ~ 10 회 라운드
+                for i in 1...10{
+                        rounds.append("\(i)회")
+                        buttonRounds.append("\(i)")
+                    }
         
-        for i in 1...20{
-              if i*15 % 60 == 0{
-                minute += 1
-                second = 0
-              }else{
-                second += 15
-              }
-              if second == 0{
-                print("0\(minute):0\(second) 분")
-              }else{
-                print("0\(minute):\(second) 분")
-              }
-            }
-            for i in 6...100{
-              if i<10{
-                print("0\(i):00 분")
-              }else{
-                print("\(i):00 분")
-              }
-            }
+        // 1 ~ 10 회 라운드
+                for i in 1...10{
+                        setRounds.append("\(i)회")
+                        buttonSetRounds.append("\(i)")
+                    }
         
-        pickedValue = times[0] // <-- 뷰가 생성될때 피커와 버튼에 값 주기
-        //btnShowTime.setTitle = times[0]
+        
+        
+        // 뷰가 생성될때 피커와 버튼에 값 주기
+        pickedRound = rounds[0]
+        pickedTime = times[0]
+        pickedRest = rest[0]
+        pickedSetRound = setRounds[0]
+        pickedSetRest = setRest[0]
+        
+        
+        tabataRoundButton.setTitle(rounds[0], for: .normal)
+        tabataWorkButton.setTitle(times[0], for: .normal)
+        tabataRestButton.setTitle(rest[0], for: .normal)
+        tabataRepSetButton.setTitle(setRounds[0], for: .normal)
+        tabataRepRestButton.setTitle(setRest[0], for: .normal)
+        
+//        for i in 1...20{
+//              if i*15 % 60 == 0{
+//                minute += 1
+//                second = 0
+//              }else{
+//                second += 15
+//              }
+//              if second == 0{
+//                print("0\(minute):0\(second)")
+//              }else{
+//                print("0\(minute):\(second)")
+//              }
+//            }
+//
+//
+//            for i in 1...20{
+//              if i*15 % 60 == 0{
+//                minute += 1
+//                second = 0
+//              }else{
+//                second += 15
+//              }
+//              if second == 0{
+//                print("0\(minute):0\(second)")
+//              }else{
+//                print("0\(minute):\(second)")
+//              }
+//            }
+//
+//        for i in 1...20{
+//              if i*15 % 60 == 0{
+//                minute += 1
+//                second = 0
+//              }else{
+//                second += 15
+//              }
+//              if second == 0{
+//                print("0\(minute):0\(second) 분")
+//              }else{
+//                print("0\(minute):\(second) 분")
+//              }
+//            }
+//            for i in 6...100{
+//              if i<10{
+//                print("0\(i):00 분")
+//              }else{
+//                print("\(i):00 분")
+//              }
+//            }
+        
+       
+        
+        tabataRepSetLabel.isHidden = isHidden
+        tabataRepSetButton.isHidden = isHidden
+        tabataRepRestLabel.isHidden = isHidden
+        tabataRepRestButton.isHidden = isHidden
+        
+        
+        
+        
+    } // viewDidLoad End.
+    
+
+    
+    @IBAction func tabataRepButton(_ sender: UIButton) {
+        tabataRepSetLabel.isHidden = true
+        print("pushed repButton")
+        
+        if isHidden {
+            tabataRepSetLabel.isHidden = false
+            tabataRepSetButton.isHidden = false
+            tabataRepRestLabel.isHidden = false
+            tabataRepRestButton.isHidden = false
+        }else{
+            tabataRepSetLabel.isHidden = true
+            tabataRepSetButton.isHidden = true
+            tabataRepRestLabel.isHidden = true
+            tabataRepRestButton.isHidden = true
+        }
+        isHidden = !isHidden
+        
     }
     
-    // 버튼 클릭시 액션
-    @IBAction func btnTime(_ sender: UIButton) {
-        
+   
+    
+    @IBAction func tabataRoundButton(_ sender: UIButton) {
         // Alert 형식
-        let alert = UIAlertController( title: "시간을 정해주세요", message: nil, preferredStyle: UIAlertController.Style.alert)
-        
+        let alert = UIAlertController( title: "횟수를 정해주세요", message: nil, preferredStyle: UIAlertController.Style.alert)
+
         // 1~10까지를 String 타입 배열로 구성
 //        let times: [String] = (1...10).map { String($0) }
-        
+
         // addPickerView에 매개변수로 있는 values 자체가 [[String]] 형식이라 맞춰서 써야 될거같습니다.
-        let pickerViewValues: [[String]] = [times]
-        let pickerViewSelectedValue: PickerViewViewController.Index = (column: 0, row: times.firstIndex(of: pickedValue!) ?? 0) // picker가 생성될 때 pickedValue가 선택된 상태로 alert가 뜸.
+        let pickerViewValues: [[String]] = [rounds]
+        let pickerViewSelectedValue: PickerViewViewController.Index = (column: 0, row: times.firstIndex(of: pickedRound!) ?? 0) // picker가 생성될 때 pickedValue가 선택된 상태로 alert가 뜸.
 
         // alert에 picker 추가해주기 + async를 통해 버튼의 text 바꿔줌.
         // picker 선택시 action은 이 안에 써주시면 됩니다.
         alert.addPickerView(values: pickerViewValues, initialSelection: pickerViewSelectedValue) { vc, picker, index, values in
             DispatchQueue.main.async {
                 UIView.animate(withDuration: 1) {
-                    self.pickedValue = self.times[index.row] // 피커에서 선택한 값 변수에 저장해주기.
-                    self.btnShowTime.setTitle(self.pickedValue, for: .normal)
+                    self.pickedRound = self.rounds[index.row] // 피커에서 선택한 값 변수에 저장해주기.
+                    self.tabataRoundButton.setTitle(self.pickedRound, for: .normal)
                 }
             }
         }
-        
-        
+
+
         alert.addAction(title: "완료", style: .cancel)
         alert.show()
-        
+
     }
     
-    @IBAction func tabataRepButton(_ sender: UIButton) {
-        tabataRepSetLabel.isHidden = true
-        print("pushed repButton")
+    @IBAction func tabataWorkButton(_ sender: UIButton) {
+        // Alert 형식
+        let alert = UIAlertController( title: "시간을 정해주세요", message: nil, preferredStyle: UIAlertController.Style.alert)
+
+        // 1~10까지를 String 타입 배열로 구성
+//        let times: [String] = (1...10).map { String($0) }
+
+        // addPickerView에 매개변수로 있는 values 자체가 [[String]] 형식이라 맞춰서 써야 될거같습니다.
+        let pickerViewValues: [[String]] = [times]
+        let pickerViewSelectedValue: PickerViewViewController.Index = (column: 0, row: times.firstIndex(of: pickedTime!) ?? 0) // picker가 생성될 때 pickedValue가 선택된 상태로 alert가 뜸.
+
+        // alert에 picker 추가해주기 + async를 통해 버튼의 text 바꿔줌.
+        // picker 선택시 action은 이 안에 써주시면 됩니다.
+        alert.addPickerView(values: pickerViewValues, initialSelection: pickerViewSelectedValue) { vc, picker, index, values in
+            DispatchQueue.main.async {
+                UIView.animate(withDuration: 1) {
+                    self.pickedTime = self.times[index.row] // 피커에서 선택한 값 변수에 저장해주기.
+                    self.tabataWorkButton.setTitle(self.pickedTime, for: .normal)
+                }
+            }
+        }
+
+
+        alert.addAction(title: "완료", style: .cancel)
+        alert.show()
     }
     
-    /*
+    @IBAction func tabataRestButton(_ sender: UIButton) {
+        // Alert 형식
+        let alert = UIAlertController( title: "시간을 정해주세요", message: nil, preferredStyle: UIAlertController.Style.alert)
+
+        // 1~10까지를 String 타입 배열로 구성
+//        let times: [String] = (1...10).map { String($0) }
+
+        // addPickerView에 매개변수로 있는 values 자체가 [[String]] 형식이라 맞춰서 써야 될거같습니다.
+        let pickerViewValues: [[String]] = [rest]
+        let pickerViewSelectedValue: PickerViewViewController.Index = (column: 0, row: times.firstIndex(of: pickedRest!) ?? 0) // picker가 생성될 때 pickedValue가 선택된 상태로 alert가 뜸.
+
+        // alert에 picker 추가해주기 + async를 통해 버튼의 text 바꿔줌.
+        // picker 선택시 action은 이 안에 써주시면 됩니다.
+        alert.addPickerView(values: pickerViewValues, initialSelection: pickerViewSelectedValue) { vc, picker, index, values in
+            DispatchQueue.main.async {
+                UIView.animate(withDuration: 1) {
+                    self.pickedRest = self.rest[index.row] // 피커에서 선택한 값 변수에 저장해주기.
+                    self.tabataRestButton.setTitle(self.pickedRest, for: .normal)
+                }
+            }
+        }
+
+
+        alert.addAction(title: "완료", style: .cancel)
+        alert.show()
+    }
+    
+    @IBAction func tabataRepSetButton(_ sender: UIButton) {
+        // Alert 형식
+        let alert = UIAlertController( title: "횟수를 정해주세요", message: nil, preferredStyle: UIAlertController.Style.alert)
+
+        // 1~10까지를 String 타입 배열로 구성
+//        let times: [String] = (1...10).map { String($0) }
+
+        // addPickerView에 매개변수로 있는 values 자체가 [[String]] 형식이라 맞춰서 써야 될거같습니다.
+        let pickerViewValues: [[String]] = [setRounds]
+        let pickerViewSelectedValue: PickerViewViewController.Index = (column: 0, row: times.firstIndex(of: pickedSetRound!) ?? 0) // picker가 생성될 때 pickedValue가 선택된 상태로 alert가 뜸.
+
+        // alert에 picker 추가해주기 + async를 통해 버튼의 text 바꿔줌.
+        // picker 선택시 action은 이 안에 써주시면 됩니다.
+        alert.addPickerView(values: pickerViewValues, initialSelection: pickerViewSelectedValue) { vc, picker, index, values in
+            DispatchQueue.main.async {
+                UIView.animate(withDuration: 1) {
+                    self.pickedSetRound = self.setRounds[index.row] // 피커에서 선택한 값 변수에 저장해주기.
+                    self.tabataRepSetButton.setTitle(self.pickedSetRound, for: .normal)
+                }
+            }
+        }
+
+
+        alert.addAction(title: "완료", style: .cancel)
+        alert.show()
+    }
+    
+    @IBAction func tabataRepRestButton(_ sender: UIButton) {
+        // Alert 형식
+        let alert = UIAlertController( title: "시간을 정해주세요", message: nil, preferredStyle: UIAlertController.Style.alert)
+
+        // 1~10까지를 String 타입 배열로 구성
+//        let times: [String] = (1...10).map { String($0) }
+
+        // addPickerView에 매개변수로 있는 values 자체가 [[String]] 형식이라 맞춰서 써야 될거같습니다.
+        let pickerViewValues: [[String]] = [setRest]
+        let pickerViewSelectedValue: PickerViewViewController.Index = (column: 0, row: times.firstIndex(of: pickedSetRest!) ?? 0) // picker가 생성될 때 pickedValue가 선택된 상태로 alert가 뜸.
+
+        // alert에 picker 추가해주기 + async를 통해 버튼의 text 바꿔줌.
+        // picker 선택시 action은 이 안에 써주시면 됩니다.
+        alert.addPickerView(values: pickerViewValues, initialSelection: pickerViewSelectedValue) { vc, picker, index, values in
+            DispatchQueue.main.async {
+                UIView.animate(withDuration: 1) {
+                    self.pickedSetRest = self.setRest[index.row] // 피커에서 선택한 값 변수에 저장해주기.
+                    self.tabataRepRestButton.setTitle(self.pickedSetRest, for: .normal)
+                }
+            }
+        }
+
+
+        alert.addAction(title: "완료", style: .cancel)
+        alert.show()
+    }
+    
+    
+    
+    
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
+         if segue.identifier == "tabataSegue"{
+             let timerView = segue.destination as! TabataTimerViewController
+             timerView.receiveItem(selecteTimeValue!)
     }
-    */
+    
 
 }
