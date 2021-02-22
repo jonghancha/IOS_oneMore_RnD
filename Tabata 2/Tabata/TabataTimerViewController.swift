@@ -15,10 +15,15 @@ class TabataTimerViewController: UIViewController {
     @IBOutlet weak var buttonTabProgressBar: UIButton!
     @IBOutlet weak var labelTimer: UILabel!
  
+    @IBOutlet weak var labelSet: UILabel!
     
     
     // segue를 통해 받아온 분
-    var getTime: String = ""
+    var getRound: Int = 0
+    var getWork: Int = 0
+    var getRest: Int = 0
+    var getSet: Int = 0
+    var getSetRest: Int = 0
     
 
     
@@ -58,7 +63,7 @@ class TabataTimerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
        
-        TabataTimerViewController.timeOut = Int(getTime)! * 60 // timeOut 변수에 segue로 가져온 값 Int변환 및 초로 변환
+        TabataTimerViewController.timeOut = getWork // timeOut 변수에 segue로 가져온 값 Int변환 및 초로 변환
     
         
         // Do any additional setup after loading the view.
@@ -68,15 +73,61 @@ class TabataTimerViewController: UIViewController {
         tabataTimerUIView.layer.cornerRadius = 20
       
         
+        labelSet.layer.masksToBounds = true
+        labelSet.layer.cornerRadius = labelSet.frame.width/2
         
         
     }
     
+    
+    @IBAction func buttonTabProgressBar(_ sender: UIButton) {
+        
+        if countUpButtonStatus{
+            // 카운트 업일때 버튼 ACTION
+            // TRUE 일때 누르면 STOP
+            if countUpButtonOnOff{
+                progressCirclePause(nowTime: Double(countUp))
+                countUpTimer.invalidate()
+                labelTimer.text = "pause"
+                countUpButtonOnOff = false
+                
+                
+                
+            // FALSE 일때 누르면 RESTART
+            }else{
+                labelTimer.text = "\(minuteText):\(secondText)"
+                progressCircleRestart(nowTime: Double(countUp))
+                countUpTimer = Timer.scheduledTimer(timeInterval: interval, target: self, selector: countUpSelector, userInfo: nil, repeats: true)
+                countUpButtonOnOff = true
+                
+            }
+           
+            
+        }else{
+            // 카운트 다운일때 버튼 ACTION
+            // 카운트다운 START
+            if countDownButtonStatus{
+                labelTimer.text = "\(countDown)"
+                countDownTimer = Timer.scheduledTimer(timeInterval: interval, target: self, selector: countDownSelector, userInfo: nil, repeats: true)
+                countDownButtonStatus = false
+                
+                //카운트다운 PAUSE
+            }else{
+                labelTimer.text = "Pause"
+                countDownButtonStatus = true
+                countDownTimer.invalidate()
+            }
+        }
+    }
 
     
   // segue 연결
-    func receiveItem(_ time: String) {
-        getTime = time
+    func receiveItem(_ round: Int, _ work: Int, _ rest: Int, _ set: Int, _ setRest: Int) {
+        getRound = round
+        getWork = work
+        getRest = rest
+        getSet = set
+        getSetRest = setRest
     }
     
     
@@ -130,7 +181,7 @@ class TabataTimerViewController: UIViewController {
         
         if countUp == TabataTimerViewController.timeOut{
             countUpTimer.invalidate()
-          
+            buttonTabProgressBar.isEnabled = false
             labelTimer.text = "END"
            
             

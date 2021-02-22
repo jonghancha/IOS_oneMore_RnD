@@ -57,8 +57,25 @@ class TabataTimerSetViewController: UIViewController {
    
     var buttonTimes = [String]()
     var buttonRest = [String]()
+    
     var buttonSetRounds = [String]()
     var buttonSetRest = [String]()
+    
+    
+    // 보낼 값 배열
+    var sendRound = [Int]()
+    var sendTime = [Int]()
+    var sendRest = [Int]()
+    var sendSetRound = [Int]()
+    var sendSetRest = [Int]()
+    
+    var indexRound = 0
+    var indexWork = 0
+    var indexRest = 0
+    var indexSet = 0
+    var indexSetRest = 0
+    
+    
     
     
     override func viewDidLoad() {
@@ -82,54 +99,13 @@ class TabataTimerSetViewController: UIViewController {
         tabataRepRestButton.layer.masksToBounds = true
         tabataRepRestButton.layer.cornerRadius = 20
         
-        var second = 0
-        var minute = 0
         
-        
-        // 5 ~ 100 분 1분 단위
-                for i in 5...100{
-                    if i < 10{
-                        times.append("0\(i):00 분")
-                    }else{
-                        times.append("\(i):00 분")
-
-                    }
-                    buttonTimes.append("\(i)")
-                }
-        // 5 ~ 100 분 1분 단위
-                for i in 5...100{
-                    if i < 10{
-                        rest.append("0\(i):00 분")
-                    }else{
-                        rest.append("\(i):00 분")
-
-                    }
-                    buttonRest.append("\(i)")
-                }
-        // 5 ~ 100 분 1분 단위
-                for i in 5...100{
-                    if i < 10{
-                        setRest.append("0\(i):00 분")
-                    }else{
-                        setRest.append("\(i):00 분")
-
-                    }
-                    buttonSetRest.append("\(i)")
-                }
-        
-        
-        // 1 ~ 10 회 라운드
-                for i in 1...10{
-                        rounds.append("\(i)회")
-                        buttonRounds.append("\(i)")
-                    }
-        
-        // 1 ~ 10 회 라운드
-                for i in 1...10{
-                        setRounds.append("\(i)회")
-                        buttonSetRounds.append("\(i)")
-                    }
-        
+        // 피커, 버튼에 들어갈 배열 구성
+        RoundInsert()
+        WorkInsert()
+        RestInsert()
+        RepSetInsert()
+        RepRestInsert()
         
         
         // 뷰가 생성될때 피커와 버튼에 값 주기
@@ -139,6 +115,8 @@ class TabataTimerSetViewController: UIViewController {
         pickedSetRound = setRounds[0]
         pickedSetRest = setRest[0]
         
+      
+        
         
         tabataRoundButton.setTitle(rounds[0], for: .normal)
         tabataWorkButton.setTitle(times[0], for: .normal)
@@ -146,73 +124,285 @@ class TabataTimerSetViewController: UIViewController {
         tabataRepSetButton.setTitle(setRounds[0], for: .normal)
         tabataRepRestButton.setTitle(setRest[0], for: .normal)
         
-//        for i in 1...20{
-//              if i*15 % 60 == 0{
-//                minute += 1
-//                second = 0
-//              }else{
-//                second += 15
-//              }
-//              if second == 0{
-//                print("0\(minute):0\(second)")
-//              }else{
-//                print("0\(minute):\(second)")
-//              }
-//            }
-//
-//
-//            for i in 1...20{
-//              if i*15 % 60 == 0{
-//                minute += 1
-//                second = 0
-//              }else{
-//                second += 15
-//              }
-//              if second == 0{
-//                print("0\(minute):0\(second)")
-//              }else{
-//                print("0\(minute):\(second)")
-//              }
-//            }
-//
-//        for i in 1...20{
-//              if i*15 % 60 == 0{
-//                minute += 1
-//                second = 0
-//              }else{
-//                second += 15
-//              }
-//              if second == 0{
-//                print("0\(minute):0\(second) 분")
-//              }else{
-//                print("0\(minute):\(second) 분")
-//              }
-//            }
-//            for i in 6...100{
-//              if i<10{
-//                print("0\(i):00 분")
-//              }else{
-//                print("\(i):00 분")
-//              }
-//            }
+  
         
-       
+        
+        
         
         tabataRepSetLabel.isHidden = isHidden
         tabataRepSetButton.isHidden = isHidden
         tabataRepRestLabel.isHidden = isHidden
         tabataRepRestButton.isHidden = isHidden
-        
-        
-        
+
         
     } // viewDidLoad End.
+    
+    
+    
+    
+    // Round 피커에 들어갈 배열
+    func RoundInsert(){
+        for i in 1...100 {
+            rounds.append("\(i) 회")
+            buttonRounds.append("\(i) 회")
+            sendRound.append(i)
+        }
+    }
+    // 얼마나 할까요? 피커에 들어갈 배열
+    func WorkInsert(){
+        var minute = 0
+        var second = 0
+        // Work picker에 들어갈 배열
+        for i in 5...900{
+            if i <= 30 {
+                
+                times.append("\(i) 초")
+                buttonTimes.append("\(i) 초")
+                sendTime.append(i)
+                continue
+            }else if i > 30 && i <= 55{
+                if i % 5 == 0 {
+                    
+                    times.append("\(i) 초")
+                    buttonTimes.append("\(i) 초")
+                    sendTime.append(i)
+                    continue
+                }
+            }else if i >= 60{
+                minute = i / 60
+                second = i % 60
+                if i % 60 == 0 {
+                    times.append("\(minute) 분")
+                    buttonTimes.append("\(minute) 분")
+                    sendTime.append(i)
+                    continue
+                }else{
+                    if i < 600{
+                        if i < 180 {
+                            if i % 10 == 0 {
+                                if second < 10 {
+                                    times.append("0\(minute):0\(second) 분")
+                                    buttonTimes.append("\(minute) 분 \(second) 초")
+                                    sendTime.append(i)
+                                    continue
+                                }else{
+                                    times.append("0\(minute):\(second) 분")
+                                    buttonTimes.append("\(minute) 분 \(second) 초")
+                                    sendTime.append(i)
+                                    continue
+                                }
+                            }
+                        }else if i < 420{
+                            if i % 15 == 0 {
+                                if second < 10 {
+                                    times.append("0\(minute):0\(second) 분")
+                                    buttonTimes.append("\(minute) 분 \(second) 초")
+                                    sendTime.append(i)
+                                    continue
+                                }else{
+                                    times.append("0\(minute):\(second) 분")
+                                    buttonTimes.append("\(minute) 분 \(second) 초")
+                                    sendTime.append(i)
+                                    continue
+                                }
+                            }
+                        }else{
+                            if i % 30 == 0 {
+                                if second < 10 {
+                                    times.append("0\(minute):0\(second) 분")
+                                    buttonTimes.append("\(minute) 분 \(second) 초")
+                                    sendTime.append(i)
+                                    continue
+                                }else{
+                                    times.append("0\(minute):\(second) 분")
+                                    buttonTimes.append("\(minute) 분 \(second) 초")
+                                    sendTime.append(i)
+                                    continue
+                                }
+                            }
+                        }
+                        
+                    }else{
+                        if i % 60 == 0 {
+                            if second < 10 {
+                                times.append("\(minute):0\(second) 분")
+                                buttonTimes.append("\(minute) 분 \(second) 초")
+                                sendTime.append(i)
+                            }else{
+                                times.append("\(minute):\(second) 분")
+                                buttonTimes.append("\(minute) 분 \(second) 초")
+                                sendTime.append(i)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    
+    // 얼마나 쉴까요? 피커에 들어갈 배열
+    func RestInsert(){
+        var minute = 0
+        var second = 0
+        // Work picker에 들어갈 배열
+        for i in 0...900{
+            if i <= 30 {
+                rest.append("\(i) 초")
+                buttonRest.append("\(i) 초")
+                sendRest.append(i)
+                continue
+            }else if i > 30 && i <= 55{
+                if i % 5 == 0 {
+                    rest.append("\(i) 초")
+                    buttonRest.append("\(i) 초")
+                    sendRest.append(i)
+                    continue
+                }
+            }else if i >= 60{
+                minute = i / 60
+                second = i % 60
+                if i % 60 == 0 {
+                    rest.append("\(minute) 분")
+                    buttonRest.append("\(minute) 분")
+                    sendRest.append(i)
+                    continue
+                }else{
+                    if i < 600{
+                        if i < 180 {
+                            if i % 10 == 0 {
+                                if second < 10 {
+                                    rest.append("0\(minute):0\(second) 분")
+                                    buttonRest.append("\(minute) 분 \(second) 초")
+                                    sendRest.append(i)
+                                    continue
+                                }else{
+                                    rest.append("0\(minute):\(second) 분")
+                                    buttonRest.append("\(minute) 분 \(second) 초")
+                                    sendRest.append(i)
+                                    continue
+                                }
+                            }
+                        }else if i < 420{
+                            if i % 15 == 0 {
+                                if second < 10 {
+                                    rest.append("0\(minute):0\(second) 분")
+                                    buttonRest.append("\(minute) 분 \(second) 초")
+                                    sendRest.append(i)
+                                    continue
+                                }else{
+                                    rest.append("0\(minute):\(second) 분")
+                                    buttonRest.append("\(minute) 분 \(second) 초")
+                                    sendRest.append(i)
+                                    continue
+                                }
+                            }
+                        }else{
+                            if i % 30 == 0 {
+                                if second < 10 {
+                                    rest.append("0\(minute):0\(second) 분")
+                                    buttonRest.append("\(minute) 분 \(second) 초")
+                                    sendRest.append(i)
+                                    continue
+                                }else{
+                                    rest.append("0\(minute):\(second) 분")
+                                    buttonRest.append("\(minute) 분 \(second) 초")
+                                    sendRest.append(i)
+                                    continue
+                                }
+                            }
+                        }
+                        
+                    }else{
+                        if i % 60 == 0 {
+                            if second < 10 {
+                                rest.append("\(minute):0\(second) 분")
+                                buttonRest.append("\(minute) 분 \(second) 초")
+                                sendRest.append(i)
+                            }else{
+                                rest.append("\(minute):\(second) 분")
+                                buttonRest.append("\(minute) 분 \(second) 초")
+                                sendRest.append(i)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    // 반복세트 피커에 들어갈 배열
+    func RepSetInsert(){
+        for i in 1...10 {
+            setRounds.append("\(i) 회")
+            buttonSetRounds.append("\(i) 회")
+            sendSetRound.append(i)
+        }
+    }
+    // 세트 휴식시간 피커에 들어갈 배열
+    func RepRestInsert(){
+        var minute = 0
+        var second = 0
+        // Work picker에 들어갈 배열
+        for i in 0...600{
+             
+            if i < 60{
+                if i % 10 == 0 {
+                    setRest.append("\(i) 초")
+                    buttonSetRest.append("\(i) 초")
+                    sendSetRest.append(i)
+                    continue
+                }
+            }
+            else if i >= 60{  // 1분 이상
+                minute = i / 60
+                second = i % 60
+                if i % 60 == 0 {
+                    setRest.append("\(minute) 분")
+                    buttonSetRest.append("\(minute) 분")
+                    sendSetRest.append(i)
+                    continue
+                }else{
+                        if i < 300{
+                            if i % 30 == 0 {
+                                if second < 10 {
+                                    setRest.append("0\(minute):0\(second) 분")
+                                    buttonSetRest.append("\(minute) 분 \(second) 초")
+                                    sendSetRest.append(i)
+                                    continue
+                                }else{
+                                    setRest.append("0\(minute):\(second) 분")
+                                    buttonSetRest.append("\(minute) 분 \(second) 초")
+                                    sendSetRest.append(i)
+                                    continue
+                                }
+                            }
+                        }else {
+                            if i % 60 == 0 {
+                                if second < 10 {
+                                    setRest.append("0\(minute):0\(second) 분")
+                                    buttonSetRest.append("\(minute) 분 \(second) 초")
+                                    sendSetRest.append(i)
+                                    continue
+                                }else{
+                                    setRest.append("0\(minute):0\(second) 분")
+                                    buttonSetRest.append("\(minute) 분 \(second) 초")
+                                    sendSetRest.append(i)
+                                    continue
+                                }
+                            }
+                        }
+                }
+                            
+                            
+            }
+        }
+    }
     
 
     
     @IBAction func tabataRepButton(_ sender: UIButton) {
         tabataRepSetLabel.isHidden = true
-        print("pushed repButton")
         
         if isHidden {
             tabataRepSetLabel.isHidden = false
@@ -249,6 +439,7 @@ class TabataTimerSetViewController: UIViewController {
                 UIView.animate(withDuration: 1) {
                     self.pickedRound = self.rounds[index.row] // 피커에서 선택한 값 변수에 저장해주기.
                     self.tabataRoundButton.setTitle(self.pickedRound, for: .normal)
+                    self.indexRound = index.row
                 }
             }
         }
@@ -276,7 +467,9 @@ class TabataTimerSetViewController: UIViewController {
             DispatchQueue.main.async {
                 UIView.animate(withDuration: 1) {
                     self.pickedTime = self.times[index.row] // 피커에서 선택한 값 변수에 저장해주기.
-                    self.tabataWorkButton.setTitle(self.pickedTime, for: .normal)
+                    self.tabataWorkButton.setTitle(self.buttonTimes[index.row], for: .normal)
+                    self.indexWork = index.row
+                    
                 }
             }
         }
@@ -303,7 +496,9 @@ class TabataTimerSetViewController: UIViewController {
             DispatchQueue.main.async {
                 UIView.animate(withDuration: 1) {
                     self.pickedRest = self.rest[index.row] // 피커에서 선택한 값 변수에 저장해주기.
-                    self.tabataRestButton.setTitle(self.pickedRest, for: .normal)
+                    self.tabataRestButton.setTitle(self.buttonRest[index.row], for: .normal)
+                    self.indexRest = index.row
+                    
                 }
             }
         }
@@ -330,7 +525,8 @@ class TabataTimerSetViewController: UIViewController {
             DispatchQueue.main.async {
                 UIView.animate(withDuration: 1) {
                     self.pickedSetRound = self.setRounds[index.row] // 피커에서 선택한 값 변수에 저장해주기.
-                    self.tabataRepSetButton.setTitle(self.pickedSetRound, for: .normal)
+                    self.tabataRepSetButton.setTitle(self.buttonSetRounds[index.row], for: .normal)
+                    self.indexSet = index.row
                 }
             }
         }
@@ -357,7 +553,8 @@ class TabataTimerSetViewController: UIViewController {
             DispatchQueue.main.async {
                 UIView.animate(withDuration: 1) {
                     self.pickedSetRest = self.setRest[index.row] // 피커에서 선택한 값 변수에 저장해주기.
-                    self.tabataRepRestButton.setTitle(self.pickedSetRest, for: .normal)
+                    self.tabataRepRestButton.setTitle(self.buttonSetRest[index.row], for: .normal)
+                    self.indexSetRest = index.row
                 }
             }
         }
@@ -379,8 +576,13 @@ class TabataTimerSetViewController: UIViewController {
         // Pass the selected object to the new view controller.
          if segue.identifier == "tabataSegue"{
              let timerView = segue.destination as! TabataTimerViewController
-             timerView.receiveItem(selecteTimeValue!)
-    }
+        
+            timerView.receiveItem(sendRound[indexRound], sendTime[indexWork], sendRest[indexRest], sendSetRound[indexSet], sendSetRest[indexSetRest])
+            
+            
+         }
     
 
-}
+    }
+    
+}// ----
