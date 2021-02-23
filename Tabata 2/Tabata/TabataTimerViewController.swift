@@ -17,7 +17,20 @@ class TabataTimerViewController: UIViewController {
  
     @IBOutlet weak var labelSet: UILabel!
     
+    @IBOutlet var labelShowRest: UILabel!
     
+    @IBOutlet var labelRoundCount: UILabel!
+    @IBOutlet var labelTotalRound: UILabel!
+    @IBOutlet var ButtonCheckResult: UIButton!
+    
+    
+    @IBOutlet var labelTextSet: UILabel!
+    @IBOutlet var labelTextSlash: UILabel!
+    @IBOutlet var labelTextBracket: UILabel!
+    
+    
+    
+    @IBOutlet var ImageViewFinish: UIView!
     // segue를 통해 받아온 분
     var getRound: Int = 0
     var getWork: Int = 0
@@ -43,7 +56,7 @@ class TabataTimerViewController: UIViewController {
     let interval = 1.0// 시간 interval  1초
     var countUpTimer = Timer()
     var countDownTimer = Timer()
-    var countDown = 10
+    var countDown = 3
     var countUp = 0 // 총 TIMER COUNT
     var minute = 0 // TIMER 분
     var second = 0 // TIMER 초
@@ -57,8 +70,13 @@ class TabataTimerViewController: UIViewController {
     let orangeColor = #colorLiteral(red: 1, green: 0.5215686275, blue: 0.2039215686, alpha: 1)                  // true 일때 누르면 false 로 바뀌면서 pause
     
     
-    // 탭 카운트
-    var tabCount = 0 // 초기값 설정
+//    // 탭 카운트
+//    var tabCount = 0 // 초기값 설정
+    
+    
+    var isWork = true
+    var roundCount = 0
+    var setCount = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,53 +90,91 @@ class TabataTimerViewController: UIViewController {
         tabataTimerUIView.layer.masksToBounds = true
         tabataTimerUIView.layer.cornerRadius = 20
       
+        ButtonCheckResult.layer.masksToBounds = true
+        ButtonCheckResult.layer.cornerRadius = 20
         
         labelSet.layer.masksToBounds = true
         labelSet.layer.cornerRadius = labelSet.frame.width/2
         
         
+        // 운동결과보기 버튼 비활성화(countup시작할때까지)
+        ButtonCheckResult.isEnabled = false
+        
+        ImageViewFinish.isHidden = true
+        
+        labelTotalRound.text = String(getRound)
+        
+        
+        labelShowRest.text = "총 \(getSet)회 중 1번째 세트"
+        print("받아온 값 :\(getRound), \(getWork), \(getRest), \(getSet), \(getSetRest)")
     }
     
+    var pushedStart = 0
     
     @IBAction func buttonTabProgressBar(_ sender: UIButton) {
         
-        if countUpButtonStatus{
-            // 카운트 업일때 버튼 ACTION
-            // TRUE 일때 누르면 STOP
-            if countUpButtonOnOff{
-                progressCirclePause(nowTime: Double(countUp))
-                countUpTimer.invalidate()
-                labelTimer.text = "pause"
-                countUpButtonOnOff = false
-                
-                
-                
-            // FALSE 일때 누르면 RESTART
-            }else{
-                labelTimer.text = "\(minuteText):\(secondText)"
-                progressCircleRestart(nowTime: Double(countUp))
-                countUpTimer = Timer.scheduledTimer(timeInterval: interval, target: self, selector: countUpSelector, userInfo: nil, repeats: true)
-                countUpButtonOnOff = true
-                
-            }
-           
+        
+        
             
-        }else{
-            // 카운트 다운일때 버튼 ACTION
-            // 카운트다운 START
-            if countDownButtonStatus{
-                labelTimer.text = "\(countDown)"
-                countDownTimer = Timer.scheduledTimer(timeInterval: interval, target: self, selector: countDownSelector, userInfo: nil, repeats: true)
-                countDownButtonStatus = false
-                
-                //카운트다운 PAUSE
+    
+            if countUpButtonStatus{
+                // 카운트 업일때 버튼 ACTION
+                // TRUE 일때 누르면 STOP
+                if countUpButtonOnOff{
+                    progressCirclePause(nowTime: Double(countUp))
+                    countUpTimer.invalidate()
+                    labelTimer.text = "pause"
+                    labelSet.backgroundColor = UIColor.gray
+                    labelTimer.textColor = UIColor.gray
+                    ButtonCheckResult.backgroundColor = UIColor.gray
+                    ButtonCheckResult.isEnabled = false
+
+                    countUpButtonOnOff = false
+
+
+                // FALSE 일때 누르면 RESTART
+                }else{
+                    labelTimer.text = "\(minuteText):\(secondText)"
+                    progressCircleRestart(nowTime: Double(countUp))
+                    countUpTimer = Timer.scheduledTimer(timeInterval: interval, target: self, selector: countUpSelector, userInfo: nil, repeats: true)
+                    labelSet.backgroundColor = UIColor.orange
+                    labelTimer.textColor = UIColor.orange
+                    ButtonCheckResult.backgroundColor = UIColor.orange
+                    ButtonCheckResult.isEnabled = true
+
+                    countUpButtonOnOff = true
+
+                }
+
+
             }else{
-                labelTimer.text = "Pause"
-                countDownButtonStatus = true
-                countDownTimer.invalidate()
+                // 카운트 다운일때 버튼 ACTION
+                // 카운트다운 START
+                if countDownButtonStatus{
+                    labelTimer.text = "\(countDown)"
+                    countDownTimer = Timer.scheduledTimer(timeInterval: interval, target: self, selector: countDownSelector, userInfo: nil, repeats: true)
+                    labelSet.backgroundColor = UIColor.orange
+                    labelTimer.textColor = UIColor.orange
+                    ButtonCheckResult.backgroundColor = UIColor.orange
+                    countDownButtonStatus = false
+
+                    //카운트다운 PAUSE
+                }else{
+                    labelTimer.text = "Pause"
+                    countDownTimer.invalidate()
+                    labelSet.backgroundColor = UIColor.gray
+                    labelTimer.textColor = UIColor.gray
+                    ButtonCheckResult.backgroundColor = UIColor.gray
+                    countDownButtonStatus = true
+                }
             }
-        }
+            
+            
+            
+       
     }
+    
+    
 
     
   // segue 연결
@@ -139,8 +195,14 @@ class TabataTimerViewController: UIViewController {
         if countDown == -1{
             countDownTimer.invalidate()
             countUpButtonStatus = true
+            ButtonCheckResult.isEnabled = true
             labelTimer.text = "GO"
-            countUpTimer = Timer.scheduledTimer(timeInterval: interval, target: self, selector: countUpSelector, userInfo: nil, repeats: true)
+            
+            
+                countUpTimer = Timer.scheduledTimer(timeInterval: interval, target: self, selector: countUpSelector, userInfo: nil, repeats: true)
+                
+            
+            
         }
     }
 
@@ -150,9 +212,41 @@ class TabataTimerViewController: UIViewController {
     
     // COUNTUP
     @objc func updateTime(){
+        
         if countUp == 0{
+            if setCount == getSet {
+                countUpTimer.invalidate()
+                buttonTabProgressBar.isEnabled = false
+                labelShowRest.isHidden = true
+                labelSet.isHidden = true
+                labelRoundCount.isHidden = true
+                labelTotalRound.isHidden = true
+                labelTextSet.isHidden = true
+                labelTextSlash.isHidden = true
+                labelTextBracket.isHidden = true
+                tabataProgressBarUIView.isHidden = true
+                labelTimer.isHidden = true
+                ImageViewFinish.isHidden = false
+                ButtonCheckResult.backgroundColor = UIColor.orange
+                
+                labelTimer.text = "END"
+            }
             progressCircle()
             
+            if isWork {
+                labelShowRest.text = "총 \(getSet)회 중 \(setCount + 1)번째 세트"
+                labelRoundCount.text = String(roundCount + 1)
+                labelSet.text = String(setCount + 1)
+                labelSet.backgroundColor = UIColor.orange
+                labelTimer.textColor = UIColor.orange
+                ButtonCheckResult.backgroundColor = UIColor.orange
+                tabataProgressBar.shapeLayer.strokeColor = UIColor.orange.cgColor
+            }else{
+                labelSet.backgroundColor = UIColor.gray
+                labelTimer.textColor = UIColor.gray
+                ButtonCheckResult.backgroundColor = UIColor.gray
+                tabataProgressBar.shapeLayer.strokeColor = UIColor.gray.cgColor
+            }
 
         }else{
             
@@ -179,13 +273,63 @@ class TabataTimerViewController: UIViewController {
         
         labelTimer.text = "\(minuteText):\(secondText)"
         
+        
+        
         if countUp == TabataTimerViewController.timeOut{
-            countUpTimer.invalidate()
-            buttonTabProgressBar.isEnabled = false
-            labelTimer.text = "END"
-           
+            
+
+            
+       
+                if isWork{
+                    if getRest != 0 {
+                        TabataTimerViewController.timeOut = getRest
+                        isWork = !isWork
+                       
+                    }
+                    countUp = 0
+                    minute = 0
+                    second = 0
+                    roundCount += 1
+                    
+                    
+                    print("\(roundCount)라운드 완료.")
+                }else{
+
+                    TabataTimerViewController.timeOut = getWork
+                    countUp = 0
+                    minute = 0
+                    second = 0
+                    isWork = !isWork
+                    print("라운드 사이 \(roundCount)번째 휴식 완료")
+                }
+                
+                
+                if roundCount == getRound {
+                    print("in setrest")
+                    if getSetRest != 0 {
+                        TabataTimerViewController.timeOut = getSetRest
+
+                    }
+                    
+                    countUp = 0
+                    minute = 0
+                    second = 0
+                    roundCount = 0
+//                    labelRoundCount.text = "1"
+                    
+                    setCount += 1
+                    print("\(setCount)번째 세트 완료")
+                    print(isWork)
+                    print(roundCount)
+
+    
+                }
+            
+               
+  
             
         }
+        
         
         
 

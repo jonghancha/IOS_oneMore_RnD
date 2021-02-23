@@ -18,6 +18,7 @@ class TabataTimerSetViewController: UIViewController {
     @IBOutlet weak var tabataRestButton: UIButton!
     
     
+    @IBOutlet var labelTotalTime: UILabel!
     
     @IBOutlet weak var tabataRepButton: UIButton!
     
@@ -108,6 +109,7 @@ class TabataTimerSetViewController: UIViewController {
         RepRestInsert()
         
         
+        
         // 뷰가 생성될때 피커와 버튼에 값 주기
         pickedRound = rounds[0]
         pickedTime = times[0]
@@ -134,7 +136,7 @@ class TabataTimerSetViewController: UIViewController {
         tabataRepRestLabel.isHidden = isHidden
         tabataRepRestButton.isHidden = isHidden
 
-        
+        calculateTotal()
     } // viewDidLoad End.
     
     
@@ -430,8 +432,9 @@ class TabataTimerSetViewController: UIViewController {
 
         // addPickerView에 매개변수로 있는 values 자체가 [[String]] 형식이라 맞춰서 써야 될거같습니다.
         let pickerViewValues: [[String]] = [rounds]
-        let pickerViewSelectedValue: PickerViewViewController.Index = (column: 0, row: times.firstIndex(of: pickedRound!) ?? 0) // picker가 생성될 때 pickedValue가 선택된 상태로 alert가 뜸.
-
+        let pickerViewSelectedValue: PickerViewViewController.Index = (column: 0, row: indexRound ) // picker가 생성될 때 pickedValue가 선택된 상태로 alert가 뜸.
+        
+        
         // alert에 picker 추가해주기 + async를 통해 버튼의 text 바꿔줌.
         // picker 선택시 action은 이 안에 써주시면 됩니다.
         alert.addPickerView(values: pickerViewValues, initialSelection: pickerViewSelectedValue) { vc, picker, index, values in
@@ -440,6 +443,7 @@ class TabataTimerSetViewController: UIViewController {
                     self.pickedRound = self.rounds[index.row] // 피커에서 선택한 값 변수에 저장해주기.
                     self.tabataRoundButton.setTitle(self.pickedRound, for: .normal)
                     self.indexRound = index.row
+                    self.calculateTotal()
                 }
             }
         }
@@ -459,8 +463,8 @@ class TabataTimerSetViewController: UIViewController {
 
         // addPickerView에 매개변수로 있는 values 자체가 [[String]] 형식이라 맞춰서 써야 될거같습니다.
         let pickerViewValues: [[String]] = [times]
-        let pickerViewSelectedValue: PickerViewViewController.Index = (column: 0, row: times.firstIndex(of: pickedTime!) ?? 0) // picker가 생성될 때 pickedValue가 선택된 상태로 alert가 뜸.
-
+        let pickerViewSelectedValue: PickerViewViewController.Index = (column: 0, row: indexWork ) // picker가 생성될 때 pickedValue가 선택된 상태로 alert가 뜸.
+        print("pickedTime = \(self.pickedTime!)")
         // alert에 picker 추가해주기 + async를 통해 버튼의 text 바꿔줌.
         // picker 선택시 action은 이 안에 써주시면 됩니다.
         alert.addPickerView(values: pickerViewValues, initialSelection: pickerViewSelectedValue) { vc, picker, index, values in
@@ -469,7 +473,7 @@ class TabataTimerSetViewController: UIViewController {
                     self.pickedTime = self.times[index.row] // 피커에서 선택한 값 변수에 저장해주기.
                     self.tabataWorkButton.setTitle(self.buttonTimes[index.row], for: .normal)
                     self.indexWork = index.row
-                    
+                    self.calculateTotal()
                 }
             }
         }
@@ -488,8 +492,8 @@ class TabataTimerSetViewController: UIViewController {
 
         // addPickerView에 매개변수로 있는 values 자체가 [[String]] 형식이라 맞춰서 써야 될거같습니다.
         let pickerViewValues: [[String]] = [rest]
-        let pickerViewSelectedValue: PickerViewViewController.Index = (column: 0, row: times.firstIndex(of: pickedRest!) ?? 0) // picker가 생성될 때 pickedValue가 선택된 상태로 alert가 뜸.
-
+        let pickerViewSelectedValue: PickerViewViewController.Index = (column: 0, row: indexRest ) // picker가 생성될 때 pickedValue가 선택된 상태로 alert가 뜸.
+        print("pickedRest = \(self.pickedRest!)")
         // alert에 picker 추가해주기 + async를 통해 버튼의 text 바꿔줌.
         // picker 선택시 action은 이 안에 써주시면 됩니다.
         alert.addPickerView(values: pickerViewValues, initialSelection: pickerViewSelectedValue) { vc, picker, index, values in
@@ -498,7 +502,7 @@ class TabataTimerSetViewController: UIViewController {
                     self.pickedRest = self.rest[index.row] // 피커에서 선택한 값 변수에 저장해주기.
                     self.tabataRestButton.setTitle(self.buttonRest[index.row], for: .normal)
                     self.indexRest = index.row
-                    
+                    self.calculateTotal()
                 }
             }
         }
@@ -517,8 +521,8 @@ class TabataTimerSetViewController: UIViewController {
 
         // addPickerView에 매개변수로 있는 values 자체가 [[String]] 형식이라 맞춰서 써야 될거같습니다.
         let pickerViewValues: [[String]] = [setRounds]
-        let pickerViewSelectedValue: PickerViewViewController.Index = (column: 0, row: times.firstIndex(of: pickedSetRound!) ?? 0) // picker가 생성될 때 pickedValue가 선택된 상태로 alert가 뜸.
-
+        let pickerViewSelectedValue: PickerViewViewController.Index = (column: 0, row: indexSet ) // picker가 생성될 때 pickedValue가 선택된 상태로 alert가 뜸.
+        print("pickedSetRound = \(self.pickedSetRound!)")
         // alert에 picker 추가해주기 + async를 통해 버튼의 text 바꿔줌.
         // picker 선택시 action은 이 안에 써주시면 됩니다.
         alert.addPickerView(values: pickerViewValues, initialSelection: pickerViewSelectedValue) { vc, picker, index, values in
@@ -527,6 +531,7 @@ class TabataTimerSetViewController: UIViewController {
                     self.pickedSetRound = self.setRounds[index.row] // 피커에서 선택한 값 변수에 저장해주기.
                     self.tabataRepSetButton.setTitle(self.buttonSetRounds[index.row], for: .normal)
                     self.indexSet = index.row
+                    self.calculateTotal()
                 }
             }
         }
@@ -545,8 +550,8 @@ class TabataTimerSetViewController: UIViewController {
 
         // addPickerView에 매개변수로 있는 values 자체가 [[String]] 형식이라 맞춰서 써야 될거같습니다.
         let pickerViewValues: [[String]] = [setRest]
-        let pickerViewSelectedValue: PickerViewViewController.Index = (column: 0, row: times.firstIndex(of: pickedSetRest!) ?? 0) // picker가 생성될 때 pickedValue가 선택된 상태로 alert가 뜸.
-
+        let pickerViewSelectedValue: PickerViewViewController.Index = (column: 0, row: indexSetRest ) // picker가 생성될 때 pickedValue가 선택된 상태로 alert가 뜸.
+        print("pickedSetRest = \(self.pickedSetRest!)")
         // alert에 picker 추가해주기 + async를 통해 버튼의 text 바꿔줌.
         // picker 선택시 action은 이 안에 써주시면 됩니다.
         alert.addPickerView(values: pickerViewValues, initialSelection: pickerViewSelectedValue) { vc, picker, index, values in
@@ -555,6 +560,7 @@ class TabataTimerSetViewController: UIViewController {
                     self.pickedSetRest = self.setRest[index.row] // 피커에서 선택한 값 변수에 저장해주기.
                     self.tabataRepRestButton.setTitle(self.buttonSetRest[index.row], for: .normal)
                     self.indexSetRest = index.row
+                    self.calculateTotal()
                 }
             }
         }
@@ -564,7 +570,16 @@ class TabataTimerSetViewController: UIViewController {
         alert.show()
     }
     
-    
+    func calculateTotal(){
+        var total = 1
+        
+        // total = 세트 수 * { 운동시간 * 라운드 수 + 쉬는시간 * (라운드 수 - 1) } + (세트 수 - 1) * 세트 휴식시간
+        total =  sendSetRound[indexSet] * (sendRound[indexRound] * (sendTime[indexWork] + sendRest[indexRest]) - sendRest[indexRest]) + (sendSetRound[indexSet] - 1) * sendSetRest[indexSetRest]
+        
+        
+        
+        labelTotalTime.text = "\(total/60)분 \(total%60)초"
+    }
     
     
     

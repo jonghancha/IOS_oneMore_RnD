@@ -19,6 +19,7 @@
 		32BE15FF25DF962900E945CE /* TabataAddNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BE15FE25DF962900E945CE /* TabataAddNoteViewController.swift */; };
 		3D282EB825E1200600E9E4C7 /* smile.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D282EB725E1200600E9E4C7 /* smile.png */; };
 		3D33132925E36785002BCDE8 /* TabataProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D33132825E36785002BCDE8 /* TabataProgressBar.swift */; };
+		3DB9F0E025E4D376007B3348 /* 제목-없음-2111.png in Resources */ = {isa = PBXBuildFile; fileRef = 3DB9F0DF25E4D376007B3348 /* 제목-없음-2111.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		32BE15FE25DF962900E945CE /* TabataAddNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabataAddNoteViewController.swift; sourceTree = "<group>"; };
 		3D282EB725E1200600E9E4C7 /* smile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smile.png; sourceTree = "<group>"; };
 		3D33132825E36785002BCDE8 /* TabataProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabataProgressBar.swift; sourceTree = "<group>"; };
+		3DB9F0DF25E4D376007B3348 /* 제목-없음-2111.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "제목-없음-2111.png"; sourceTree = "<group>"; };
 		C581719ACCE0BE65726BA67F /* Pods-Tabata.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tabata.debug.xcconfig"; path = "Target Support Files/Pods-Tabata/Pods-Tabata.debug.xcconfig"; sourceTree = "<group>"; };
 		F1514C0632B53602D2DBAE0E /* Pods_Tabata.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tabata.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -81,6 +83,7 @@
 		32BE15DB25DF8E6800E945CE /* Tabata */ = {
 			isa = PBXGroup;
 			children = (
+				3DB9F0DF25E4D376007B3348 /* 제목-없음-2111.png */,
 				3D282EB725E1200600E9E4C7 /* smile.png */,
 				32BE15DC25DF8E6800E945CE /* AppDelegate.swift */,
 				32BE15DE25DF8E6800E945CE /* SceneDelegate.swift */,
@@ -169,6 +172,7 @@
 				32BE15E625DF8E6B00E945CE /* Assets.xcassets in Resources */,
 				3D282EB825E1200600E9E4C7 /* smile.png in Resources */,
 				32BE15E425DF8E6800E945CE /* Main.storyboard in Resources */,
+				3DB9F0E025E4D376007B3348 /* 제목-없음-2111.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -61,6 +61,8 @@ class TabataProgressBar: UIView {
         layer.addSublayer(shapeLayer)
 
     }
+    
+
 
     
     
@@ -97,6 +99,7 @@ class TabataProgressBar: UIView {
         basicAnimation.isRemovedOnCompletion = false
         basicAnimation.speed = 0
 
+        shapeLayer.strokeColor = UIColor.gray.cgColor
         shapeLayer.strokeEnd = percentage
         shapeLayer.add(basicAnimation, forKey: "basicStroke")
 
