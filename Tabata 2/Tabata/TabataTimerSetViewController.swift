@@ -1,15 +1,15 @@
 //
-//  TabataTimerSetViewController.swift
-//  Tabata
+//  TabataViewController.swift
+//  onemoretimer
 //
-//  Created by TJ on 2021/02/19.
+//  Created by jonghan on 2021/02/24.
 //
 
 import UIKit
 import SimpleAlertPickers
 
-class TabataTimerSetViewController: UIViewController {
-    
+class TabataViewController: UIViewController {
+
     @IBOutlet weak var tabataUIView: UIView!
     @IBOutlet weak var tabataStartButton: UIButton!
     
@@ -578,7 +578,7 @@ class TabataTimerSetViewController: UIViewController {
         
         
         
-        labelTotalTime.text = "\(total/60)분 \(total%60)초"
+        labelTotalTime.text = "총 운동시간은 \(total/60)분 \(total%60)초입니다."
     }
     
     
@@ -589,7 +589,7 @@ class TabataTimerSetViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
-         if segue.identifier == "tabataSegue"{
+         if segue.identifier == "segueTimer"{
              let timerView = segue.destination as! TabataTimerViewController
         
             timerView.receiveItem(sendRound[indexRound], sendTime[indexWork], sendRest[indexRest], sendSetRound[indexSet], sendSetRest[indexSetRest])
@@ -600,4 +600,5 @@ class TabataTimerSetViewController: UIViewController {
 
     }
     
-}// ----
+
+}

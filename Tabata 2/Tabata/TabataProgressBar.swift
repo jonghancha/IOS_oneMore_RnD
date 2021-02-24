@@ -1,8 +1,8 @@
 //
 //  TabataProgressBar.swift
-//  Tabata
+//  onemoretimer
 //
-//  Created by mini on 2021/02/22.
+//  Created by jonghan on 2021/02/24.
 //
 
 import UIKit
@@ -122,4 +122,3 @@ class TabataProgressBar: UIView {
 
 
 }
-

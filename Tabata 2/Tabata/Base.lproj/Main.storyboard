@@ -35,36 +35,6 @@
             </objects>
             <point key="canvasLocation" x="1123.0769230769231" y="-191.23222748815164"/>
         </scene>
-        <!--Tabata Add Note View Controller-->
-        <scene sceneID="988-tx-8pm">
-            <objects>
-                <viewController id="UdV-Ro-frh" customClass="TabataAddNoteViewController" customModule="Tabata" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="EGp-yT-KRn">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hbj-rX-hf0">
-                                <rect key="frame" x="172" y="34" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Add Note" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fxw-NU-kOz">
-                                <rect key="frame" x="57" y="316" width="276" height="87"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="35"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="PQV-4y-eIy"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="p8d-AB-0d1"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="0lR-HZ-SAt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3149" y="309"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="8kr-GT-gPU">
             <objects>
@@ -450,6 +420,9 @@
                                         <state key="normal" title="운동내역을 확인하세요">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
+                                        <connections>
+                                            <segue destination="Dts-vU-9Hj" kind="showDetail" identifier="segueAddNote" id="qNl-Gx-tCL"/>
+                                        </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="총 3회 중 2회차(04:30) 휴식" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wiF-1h-d99">
                                         <rect key="frame" x="8" y="9" width="342" height="21"/>
@@ -544,11 +517,125 @@
             </objects>
             <point key="canvasLocation" x="2220" y="-496.91943127962082"/>
         </scene>
+        <!--Tabata Add Note View Controller-->
+        <scene sceneID="bSI-oU-c50">
+            <objects>
+                <viewController id="Dts-vU-9Hj" customClass="TabataAddNoteViewController" customModule="Tabata" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="C6p-RC-dfm">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="790"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" id="0PS-ip-tAA">
+                                <rect key="frame" x="0.0" y="0.0" width="390" height="790"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="돌아가기 " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o8H-cQ-Wev">
+                                        <rect key="frame" x="156.33333333333334" y="44" width="77.666666666666657" height="25.333333333333329"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="∨" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="21G-ng-9ch">
+                                        <rect key="frame" x="187" y="68" width="16" height="32.333333333333343"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="27"/>
+                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TABATA.png" translatesAutoresizingMaskIntoConstraints="NO" id="wNs-mt-gIu">
+                                        <rect key="frame" x="14" y="114" width="100" height="100"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="21/02/17 오후 4시 50분 " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="85y-Zr-K4R">
+                                        <rect key="frame" x="223" y="192.66666666666666" width="144" height="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="wNV-Uc-ahr">
+                                        <rect key="frame" x="16" y="265" width="358" height="378"/>
+                                        <color key="backgroundColor" systemColor="linkColor"/>
+                                        <color key="textColor" systemColor="labelColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e1T-Wb-29o">
+                                        <rect key="frame" x="16" y="663" width="358" height="55"/>
+                                        <color key="backgroundColor" red="1" green="0.52156862749999999" blue="0.20392156859999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <state key="normal" title="코멘트 입력">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="buttonInsertComment:" destination="Dts-vU-9Hj" eventType="touchUpInside" id="2OE-1E-Yup"/>
+                                        </connections>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="\(time) / \(rounds)라운드" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gCt-du-iQI">
+                                        <rect key="frame" x="191" y="151.33333333333334" width="178" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="운동 코멘트" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ebq-Oe-S1A">
+                                        <rect key="frame" x="16" y="222" width="96" height="26"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <viewLayoutGuide key="safeArea" id="dNv-AF-bYH"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="Ebq-Oe-S1A" firstAttribute="leading" secondItem="dNv-AF-bYH" secondAttribute="leading" constant="16" id="6oK-Wr-02A"/>
+                                    <constraint firstItem="e1T-Wb-29o" firstAttribute="trailing" secondItem="wNV-Uc-ahr" secondAttribute="trailing" id="7KF-xH-wLc"/>
+                                    <constraint firstItem="gCt-du-iQI" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="wNs-mt-gIu" secondAttribute="trailing" constant="7" id="8Jh-Nm-MyT"/>
+                                    <constraint firstItem="dNv-AF-bYH" firstAttribute="trailing" secondItem="gCt-du-iQI" secondAttribute="trailing" constant="21" id="BhX-P2-xXM"/>
+                                    <constraint firstItem="85y-Zr-K4R" firstAttribute="top" secondItem="gCt-du-iQI" secondAttribute="bottom" constant="20.5" id="Emy-8q-f4M"/>
+                                    <constraint firstItem="wNV-Uc-ahr" firstAttribute="top" secondItem="Ebq-Oe-S1A" secondAttribute="bottom" constant="17" id="Fsw-7p-g9x"/>
+                                    <constraint firstItem="21G-ng-9ch" firstAttribute="top" secondItem="o8H-cQ-Wev" secondAttribute="bottom" constant="-1.5" id="KTI-Aq-PbI"/>
+                                    <constraint firstItem="Ebq-Oe-S1A" firstAttribute="top" secondItem="wNs-mt-gIu" secondAttribute="bottom" constant="8" id="NzD-8j-yRB"/>
+                                    <constraint firstItem="o8H-cQ-Wev" firstAttribute="centerX" secondItem="dNv-AF-bYH" secondAttribute="centerX" id="OZT-Ok-5Pm"/>
+                                    <constraint firstItem="21G-ng-9ch" firstAttribute="centerX" secondItem="dNv-AF-bYH" secondAttribute="centerX" id="PPt-6k-Yi3"/>
+                                    <constraint firstItem="o8H-cQ-Wev" firstAttribute="top" secondItem="dNv-AF-bYH" secondAttribute="top" constant="44" id="V4m-4W-aeV"/>
+                                    <constraint firstItem="85y-Zr-K4R" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="wNs-mt-gIu" secondAttribute="trailing" constant="8" symbolic="YES" id="VJa-EN-d29"/>
+                                    <constraint firstItem="wNV-Uc-ahr" firstAttribute="leading" secondItem="dNv-AF-bYH" secondAttribute="leading" constant="16" id="c2H-TA-sj1"/>
+                                    <constraint firstItem="gCt-du-iQI" firstAttribute="top" secondItem="21G-ng-9ch" secondAttribute="bottom" constant="51" id="emT-A9-0Rg"/>
+                                    <constraint firstItem="wNs-mt-gIu" firstAttribute="leading" secondItem="dNv-AF-bYH" secondAttribute="leading" constant="14" id="fub-nQ-2K7"/>
+                                    <constraint firstItem="wNs-mt-gIu" firstAttribute="top" secondItem="dNv-AF-bYH" secondAttribute="top" constant="114" id="jtw-LZ-Z1v"/>
+                                    <constraint firstItem="dNv-AF-bYH" firstAttribute="bottom" secondItem="e1T-Wb-29o" secondAttribute="bottom" constant="38" id="l39-QN-mNn"/>
+                                    <constraint firstItem="dNv-AF-bYH" firstAttribute="trailing" secondItem="wNV-Uc-ahr" secondAttribute="trailing" constant="16" id="lWT-zi-mbG"/>
+                                    <constraint firstItem="e1T-Wb-29o" firstAttribute="leading" secondItem="wNV-Uc-ahr" secondAttribute="leading" id="mJK-5Y-jDL"/>
+                                    <constraint firstItem="dNv-AF-bYH" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Ebq-Oe-S1A" secondAttribute="trailing" symbolic="YES" id="nCu-60-Au8"/>
+                                    <constraint firstItem="dNv-AF-bYH" firstAttribute="bottom" secondItem="wNV-Uc-ahr" secondAttribute="bottom" constant="113" id="ocN-dR-VvH"/>
+                                    <constraint firstItem="e1T-Wb-29o" firstAttribute="top" secondItem="wNV-Uc-ahr" secondAttribute="bottom" constant="20" id="sEU-De-R8e"/>
+                                    <constraint firstItem="dNv-AF-bYH" firstAttribute="trailing" secondItem="85y-Zr-K4R" secondAttribute="trailing" constant="23" id="uaS-bx-is5"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="PpP-Mm-orB"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="KtE-j2-YWO"/>
+                    <connections>
+                        <outlet property="labelCurrentTime" destination="85y-Zr-K4R" id="JIX-lW-pA2"/>
+                        <outlet property="labelResult" destination="gCt-du-iQI" id="FWF-xc-v9M"/>
+                        <outlet property="textViewComment" destination="wNV-Uc-ahr" id="Pze-Tr-fw7"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jsO-Yt-zbG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3231" y="309"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="TABATA.png" width="100" height="100"/>
         <image name="plus.circle.fill" catalog="system" width="128" height="121"/>
         <image name="smile.png" width="46" height="46"/>
         <image name="제목-없음-2111.png" width="1000" height="1000"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="linkColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
