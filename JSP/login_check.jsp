@@ -4,15 +4,15 @@
 
 <%
     request.setCharacterEncoding("utf-8");
-	String Id = request.getParameter("Id");
-	String Pw = request.getParameter("Pw");
+	String Id = request.getParameter("id");
+	String Pw = request.getParameter("pw");
 
 //------
 
-	String url_mysql = "jdbc:mysql://localhost/education?serverTimezone=UTC&characterEncoding=utf8&useSSL=FALSE";
+	String url_mysql = "jdbc:mysql://database-2.cotrd7tmeavd.ap-northeast-2.rds.amazonaws.com/firstkorea?serverTimezone=UTC&characterEncoding=utf8&useSSL=FALSE";
  	String id_mysql = "root";
  	String pw_mysql = "qwer1234";
-    String WhereDefault = "SELECT sdept FROM student WHERE sname=?";
+    String WhereDefault = "SELECT userPw FROM userinfo WHERE userId=?";
     int count = 0;
 
     PreparedStatement ps = null;
@@ -35,37 +35,30 @@
         if (rs.next()) // 입려된 아이디에 해당하는 비번 있을경우
             {
                 dbPW = rs.getString(1); // 비번을 변수에 넣는다.
+               
  
-                if (dbPW.equals(Pw)) 
-                    x = 1; // 넘겨받은 비번과 꺼내온 배번 비교. 같으면 인증성공
-                else                  
+                if (dbPW.equals(Pw)) {
+                    x = 1; // 넘겨받은 비번과 꺼내온 비번 비교. 같으면 인증성공
+                    
+                }
+                else{                 
                     x = 0; // DB의 비밀번호와 입력받은 비밀번호 다름, 인증실패
-                
+                     
+                }
             } else {
                 x = -1; // 해당 아이디가 없을 경우
+                  
             }
 
 
 
 %>
   	[ 
-<%
-        while (rs.next()) {
-            if (count == 0) {
 
-            }else{
-%>
-            , 
-<%           
-            }
-            count++;                 
-%>
 			{
 			"result" : "<%=x %>"		
 			}
-<%		
-        }
-%>
+
 		  ]
 <%		
         conn_mysql.close();
