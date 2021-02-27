@@ -7,7 +7,9 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, DbLoginCheckProtocol{
+    
+    
 
     @IBOutlet weak var tfId: UITextField!
     @IBOutlet weak var tfPw: UITextField!
@@ -26,7 +28,6 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
     }
     
@@ -41,6 +42,7 @@ class LoginViewController: UIViewController {
     }
     */
     
+    
     @IBAction func btnTabAutoLogin(_ sender: UIButton) {
         sender.isSelected.toggle()
         print(sender.isSelected)
@@ -48,25 +50,53 @@ class LoginViewController: UIViewController {
         // false일 때 : 색칠안된 체크박스
     }
     
+    
     // 로그인 버튼
     @IBAction func btnLogin(_ sender: UIButton) {
-        let dbLoginCheck = DBLoginCheck()
-        let result = dbLoginCheck.check(Id: "차종한", Pw: "산업공학")
+        let inputId = tfId.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        let inputPw = tfPw.text!.trimmingCharacters(in: .whitespacesAndNewlines)
         
-        if result == 1 {
-            let resultAlert = UIAlertController(title: "완료", message: "입력이 되었습니다.", preferredStyle: UIAlertController.Style.alert)
-            let onAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: {ACTION in
-                self.navigationController?.popViewController(animated: true) // 화면 지워주기
-            })
-            resultAlert.addAction(onAction)
-            present(resultAlert, animated: true, completion: nil)
+        if isValidEmail(testStr: inputId){
+            let dbLoginCheck = DBLoginCheck()
+            dbLoginCheck.delegate = self
+            dbLoginCheck.check(id: inputId, pw: inputPw)
         }else{
-            let resultAlert = UIAlertController(title: "실패", message: "에러가 발생되었습니다.", preferredStyle: UIAlertController.Style.alert)
-            let onAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil)
-            resultAlert.addAction(onAction)
-            present(resultAlert, animated: true, completion: nil)
+            let emailAlert = UIAlertController(title: "오류", message: "이메일 형식이 아닙니다.", preferredStyle: UIAlertController.Style.alert)
+            let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil)
+            emailAlert.addAction(okAction)
+            present(emailAlert, animated: true, completion: nil)
         }
     }
+    
+    
+    func isValidEmail(testStr:String) -> Bool {
+           let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+           let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+           return emailTest.evaluate(with: testStr)
+    }
+    
+    
+    func loginResult(result: Int) {
+        print(result)
+        switch result {
+        case 1:
+            print("로그인 성공")
+            let resultAlert = UIAlertController(title: "완료", message: "로그인 성공", preferredStyle: UIAlertController.Style.alert)
+            let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil)
+            resultAlert.addAction(okAction)
+            present(resultAlert, animated: true, completion: nil)
+            break
+        case 0:
+            print("비밀번호 틀림")
+            break
+        case -1:
+            print("아이디 없음")
+            break
+        default:
+            break
+        }
+    }
+    
     
     // 아이디 찾기
     @IBAction func btnFindId(_ sender: UIButton) {

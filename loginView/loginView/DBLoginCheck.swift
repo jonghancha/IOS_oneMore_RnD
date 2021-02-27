@@ -7,16 +7,20 @@
 
 import Foundation
 
+protocol DbLoginCheckProtocol: class {
+    func loginResult(result: Int)
+}
+
 
 class DBLoginCheck: NSObject {
+    var delegate: DbLoginCheckProtocol!
     
     var urlPath = "http://127.0.0.1:8080/JSP/login_check.jsp"
     
-    func check(Id: String, Pw: String) -> Int{
+    func check(id: String, pw: String){
         
-        var result = 0
-        
-        let urlAdd = "?Id=\(Id)&Pw=\(Pw)"
+        let urlAdd = "?id=\(id)&pw=\(pw)"
+        print(id,pw)
         urlPath = urlPath + urlAdd // get 방식으로 보낼 값들 달아주기
         
         // 한글 url encoding (한글 -> % 글씨로)
@@ -30,18 +34,17 @@ class DBLoginCheck: NSObject {
                 print("Failed to download data")
             }else{
                 print("Data is downloading")
-                result = self.parseJSON(data!)
+               self.parseJSON(data!)
             }
         }
         task.resume()
-        return result
     }
     
     
     /*
      json parsing 작업
      */
-    func parseJSON(_ data: Data) -> Int{
+    func parseJSON(_ data: Data){
         var jsonResult = NSArray()
         
         do{
@@ -56,14 +59,17 @@ class DBLoginCheck: NSObject {
         
         for i in 0..<jsonResult.count {
             jsonElement = jsonResult[i] as! NSDictionary
-            
-            if let loginResult = jsonElement["result"] as? Int{
-
-                result = loginResult
+            print(jsonElement)
+            if let loginResult = jsonElement["result"] as? String{
+                print("in if let")
+                result = Int(loginResult)!
             }
+            print("in for" ,result)
             
         }
-        return result
+        DispatchQueue.main.async(execute: {() -> Void in
+            self.delegate.loginResult(result: result)
+        })
     }
     
     
