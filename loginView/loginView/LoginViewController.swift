@@ -20,17 +20,39 @@ class LoginViewController: UIViewController, DbLoginCheckProtocol{
     @IBOutlet weak var btnFindPw: UIButton!
     @IBOutlet weak var btnSignIn: UIButton!
     
-    @IBOutlet weak var btnGoogleLogin: UIButton!
     @IBOutlet weak var btnKakaoLogin: UIButton!
     @IBOutlet weak var btnNaverLogin: UIButton!
     
+    
+    let rightButton  = UIButton(type: .custom)
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        guard !UserDefaults.standard.bool(forKey: "autoLogin") else {
+            self.performSegue(withIdentifier: "loginSuccess", sender: self)
+            return
+        }
+        
+        rightButton.setImage(UIImage(systemName: "eye"), for: .normal)
+        rightButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: -40, bottom: 0, right: 0)
+        tfPw.rightViewMode = .always
+        tfPw.rightView = rightButton
+        
+        
+        tfPw.isSecureTextEntry.toggle()
     }
     
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
 
     /*
     // MARK: - Navigation
@@ -81,16 +103,31 @@ class LoginViewController: UIViewController, DbLoginCheckProtocol{
         switch result {
         case 1:
             print("로그인 성공")
-            let resultAlert = UIAlertController(title: "완료", message: "로그인 성공", preferredStyle: UIAlertController.Style.alert)
-            let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil)
-            resultAlert.addAction(okAction)
-            present(resultAlert, animated: true, completion: nil)
+            if btnTabAutoLogin.isSelected {
+                UserDefaults.standard.set(true, forKey: "autoLogin")
+            }
+            // 메인으로 이동
+            self.performSegue(withIdentifier: "loginSuccess", sender: self)
             break
         case 0:
             print("비밀번호 틀림")
+            let resultAlert = UIAlertController(title: "실패", message: "비밀번호를 다시 입력해주세요", preferredStyle: UIAlertController.Style.alert)
+            let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: {ACTION in
+                self.tfPw.becomeFirstResponder()
+                
+            })
+            resultAlert.addAction(okAction)
+            present(resultAlert, animated: true, completion: nil)
             break
         case -1:
             print("아이디 없음")
+            let resultAlert = UIAlertController(title: "실패", message: "존재하지 않는 아이디입니다", preferredStyle: UIAlertController.Style.alert)
+            let okAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: {ACTION in
+                self.tfId.becomeFirstResponder()
+                
+            })
+            resultAlert.addAction(okAction)
+            present(resultAlert, animated: true, completion: nil)
             break
         default:
             break
@@ -110,9 +147,6 @@ class LoginViewController: UIViewController, DbLoginCheckProtocol{
     @IBAction func btnSignIn(_ sender: UIButton) {
     }
     
-    // 구글 로그인
-    @IBAction func btnGoogleLogin(_ sender: UIButton) {
-    }
     
     // 카카오 로그인
     @IBAction func btnKakaoLogin(_ sender: UIButton) {
